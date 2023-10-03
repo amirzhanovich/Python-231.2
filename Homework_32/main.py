@@ -33,29 +33,33 @@ class Calc:
         self.btn_sq = ttk.Button(self.root, text='x²', command=lambda: self.btn_square())
         self.btn_sqRoot = ttk.Button(self.root, text='√', command=lambda: self.btn_squareRoot())
         self.btn_oneDiv = ttk.Button(self.root, text='1/x', command=lambda: self.btn_oneDivided())
+        self.btn_intDiv = ttk.Button(self.root, text='//', command=lambda: self.btn_intDivision())
+        self.btn_remDiv = ttk.Button(self.root, text='%', command=lambda: self.btn_remDivision())
 
         #----------------Grid-----------------#
-        self.btn1.grid(row=4,column=0)
-        self.btn2.grid(row=4,column=1)
-        self.btn3.grid(row=4,column=2)
-        self.btn4.grid(row=3,column=0)
-        self.btn5.grid(row=3,column=1)
-        self.btn6.grid(row=3,column=2)
-        self.btn7.grid(row=2,column=0)
-        self.btn8.grid(row=2,column=1)
-        self.btn9.grid(row=2,column=2)
-        self.btn0.grid(row=5,column=1)
+        self.btn1.grid(row=5,column=0)
+        self.btn2.grid(row=5,column=1)
+        self.btn3.grid(row=5,column=2)
+        self.btn4.grid(row=4,column=0)
+        self.btn5.grid(row=4,column=1)
+        self.btn6.grid(row=4,column=2)
+        self.btn7.grid(row=3,column=0)
+        self.btn8.grid(row=3,column=1)
+        self.btn9.grid(row=3,column=2)
+        self.btn0.grid(row=6,column=1)
 
-        self.btn_oneDiv.grid(row=1,column=0)
-        self.btn_sq.grid(row=1,column=1)
-        self.btn_sqRoot.grid(row=1,column=2)
-        self.btn_div.grid(row=1,column=3)
-        self.btn_mul.grid(row=2,column=3)
-        self.btn_min.grid(row=3,column=3)
-        self.btn_sum.grid(row=4,column=3)
-        self.btn_cl.grid(row=5,column=0)
-        self.btn_com.grid(row=5,column=2)
-        self.btn_eq.grid(row=5,column=3)
+        self.btn_intDiv.grid(row=1,column=0,columnspan=2)
+        self.btn_remDiv.grid(row=1,column=2,columnspan=2)
+        self.btn_oneDiv.grid(row=2,column=0)
+        self.btn_sq.grid(row=2,column=1)
+        self.btn_sqRoot.grid(row=2,column=2)
+        self.btn_div.grid(row=2,column=3)
+        self.btn_mul.grid(row=3,column=3)
+        self.btn_min.grid(row=4,column=3)
+        self.btn_sum.grid(row=5,column=3)
+        self.btn_cl.grid(row=6,column=0)
+        self.btn_com.grid(row=6,column=2)
+        self.btn_eq.grid(row=6,column=3)
 
     # ---------------Методы------------------#
     def btn_click(self, num):
@@ -106,6 +110,16 @@ class Calc:
             self.btn_clear()
             current_num = "ZeroDivisionError"
             self.btn_click(current_num)
+    def btn_intDivision(self):
+        first_num = self.num_entry.get()
+        self.math = "//"
+        self.f_num = float(first_num)
+        self.num_entry.delete(0, tk.END)
+    def btn_remDivision(self):
+        first_num = self.num_entry.get()
+        self.math = "%"
+        self.f_num = float(first_num)
+        self.num_entry.delete(0, tk.END)
     def btn_equal(self):
         second_num = self.num_entry.get()
         self.num_entry.delete(0, tk.END)
@@ -118,6 +132,20 @@ class Calc:
         if self.math == '/':
             try:
                 self.num_entry.insert(0, self.f_num / float(second_num))
+            except ZeroDivisionError:
+                self.btn_clear()
+                current_num = "ZeroDivisionError"
+                self.btn_click(current_num)
+        if self.math == "//":
+            try:
+                self.num_entry.insert(0, self.f_num // float(second_num))
+            except ZeroDivisionError:
+                self.btn_clear()
+                current_num = "ZeroDivisionError"
+                self.btn_click(current_num)
+        if self.math == "%":
+            try:
+                self.num_entry.insert(0, self.f_num % float(second_num))
             except ZeroDivisionError:
                 self.btn_clear()
                 current_num = "ZeroDivisionError"
